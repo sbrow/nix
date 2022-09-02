@@ -25,8 +25,8 @@ Vagrant.configure("2") do |config|
     end
   
     config.vm.provision "shell", inline: <<-SHELL
-        # nix develop 'nixpkgs#git' --command "sudo nixos-rebuild switch --flake /vagrant"
-        nix-shell -p git --command "sudo nixos-rebuild switch --flake /vagrant"
+        # nix develop 'nixpkgs#git' --command "sudo nixos-rebuild switch --flake /vagrant#vagrant"
+        nix-shell -p git --command "sudo nixos-rebuild switch --flake /vagrant#vagrant"
     SHELL
   end
   
