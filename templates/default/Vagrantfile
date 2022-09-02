@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "nixos"
+  
+    # Disable automatic box update checking. If you disable this, then
+    # boxes will only be checked for updates when the user runs
+    # `vagrant box outdated`. This is not recommended.
+    # config.vm.box_check_update = false
+  
+    # config.vm.network "forwarded_port", guest: 80, host: 80
+    # config.vm.network "forwarded_port", guest: 443, host: 443
+    config.vm.network "private_network", ip: "192.168.56.44", auto_config: false
+    # config.vm.network "public_network"
+  
+    config.vm.provider "virtualbox" do |vb|
+      # Display the VirtualBox GUI when booting the machine
+      vb.gui = false
+  
+      # Customize the amount of memory on the VM:
+      # vb.memory = 4 * 1024
+  
+      # vb.cpus = 2;
+    end
+  
+    config.vm.provision "shell", inline: <<-SHELL
+        # nix develop 'nixpkgs#git' --command "sudo nixos-rebuild switch --flake /vagrant"
+        nix-shell -p git --command "sudo nixos-rebuild switch --flake /vagrant"
+    SHELL
+  end
+  
