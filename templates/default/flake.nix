@@ -14,9 +14,9 @@
       (system: {
         formatter = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
       }) // {
-      nixosModules.default = { config, nixpkgs, ... }: {
+      nixosModules.default = { config, pkgs, ... }: {
         config = {
-          environment.systemPackages = with nixpkgs; [ git ];
+          environment.systemPackages = with [ pkgs.git ];
           /* Your config here */
         };
       };
