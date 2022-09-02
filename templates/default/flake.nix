@@ -6,8 +6,9 @@
   };
 
   outputs = { self, nixpkgs, sbrow }: {
-    nixosModules.default = { config, ... }: {
+    nixosModules.default = { config, nixpkgs, ... }: {
       config = {
+        environment.systemPackages = with nixpkgs; [ git ];
         /* Your config here */
       };
     };
