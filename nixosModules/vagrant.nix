@@ -9,6 +9,8 @@
       options = [ "rw,uid=1001,gid=60,_netdev" ]; # mount as vagrant:nginx
     };
 
+    security.sudo.wheelNeedsPassword = false;
+
     users.users.root.password = "vagrant";
     users.users."vagrant" = {
       isNormalUser = true;
