@@ -1,7 +1,7 @@
 {
   description = "A very basic flake";
 
-  outputs = { self, nixpkgs }: {
+  outputs = { self }: {
     nixosModules.vagrant = { ... }: { imports = [ ./nixosModules/vagrant.nix ]; };
   };
 }
