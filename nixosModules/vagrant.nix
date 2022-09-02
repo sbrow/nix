@@ -11,6 +11,10 @@
       options = [ "rw,uid=1001,gid=60,_netdev" ]; # mount as vagrant:nginx
     };
 
+    networking.extraHosts = ''
+      127.0.0.1 ${config.networking.hostName}.local
+    '';
+
     security.sudo.wheelNeedsPassword = false;
 
     users.users.root.password = "vagrant";
@@ -26,5 +30,14 @@
     };
 
     services.openssh.enable = true;
+
+    services.avahi = {
+      enable = true;
+      publish = {
+        enable = true;
+        addresses = true;
+        workstation = false;
+      };
+    };
   };
 }
