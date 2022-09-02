@@ -1,5 +1,7 @@
 { config, ... }: {
   config = {
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
     virtualisation.virtualbox.guest.enable = true;
 
     # Mount a VirtualBox shared folder.
