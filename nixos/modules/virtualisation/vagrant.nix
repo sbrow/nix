@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, hostName ? "nixos", ... }: {
   config = {
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -11,6 +11,7 @@
       options = [ "rw,uid=1001,gid=60,_netdev" ]; # mount as vagrant:nginx
     };
 
+    networking.hostName = hostName;
     networking.extraHosts = ''
       127.0.0.1 ${config.networking.hostName}.local
     '';
@@ -39,5 +40,8 @@
         workstation = false;
       };
     };
-  };
+  } /*// (mkIf services.laravel.enable {
+    services.laravel.root = mkDefault /vagrant;
+    services.laravel.domain = mkDefault (config.networking.hostName + ".local");
+  })*/;
 }
