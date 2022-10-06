@@ -48,7 +48,7 @@ in
     (lib.mkIf
       cfg.enable
       {
-        services.laravel.root = lib.mkDefault /vagrant;
+        services.laravel.root = lib.mkDefault "/vagrant";
         services.laravel.domain = lib.mkDefault (hostName + ".local");
         services.laravel.user = lib.mkDefault "vagrant";
       })
