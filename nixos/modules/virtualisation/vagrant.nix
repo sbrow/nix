@@ -1,5 +1,8 @@
-{ config, hostName ? "nixos", ... }: {
-  config = mkMerge [
+{ config, lib, hostName ? "nixos", ... }:
+let cfg = config.services.laravel;
+in
+{
+  config = lib.mkMerge [
     {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -42,11 +45,11 @@
         };
       };
     }
-    mkIf
-    services.laravel.enable
-    {
-      services.laravel.root = mkDefault /vagrant;
-      services.laravel.domain = mkDefault (config.networking.hostName + ".local");
-    }
+    (lib.mkIf
+      cfg.enable
+      {
+        services.laravel.root = lib.mkDefault /vagrant;
+        services.laravel.domain = lib.mkDefault (hostName + ".local");
+      })
   ];
 }
