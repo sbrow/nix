@@ -61,7 +61,7 @@ in
       phpPackage = lib.mkOption {
         description = "The php package run laravel with.";
         type = lib.types.package;
-        default = pkgs.php;
+        default = (pkgs.php.withExtensions ({ enabled, all }: enabled ++ [ all.redis ]));
       };
 
       db.connection = lib.mkOption {
