@@ -75,7 +75,7 @@ in
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
       environment.systemPackages = with pkgs; [
-        php.packages.composer
+        cfg.phpPackage.packages.composer
       ];
 
       services.phpfpm.phpPackage = cfg.phpPackage;
