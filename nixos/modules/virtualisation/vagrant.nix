@@ -44,6 +44,17 @@ in
           workstation = false;
         };
       };
+
+      environment.systemPackages = with pkgs; [
+        direnv
+        mcfly
+      ];
+
+      programs.bash.shellInit = ''
+        eval "$(direnv hook bash)";
+        eval "$(mcfly init bash)";
+        cd /vagrant;
+      '';
     }
     (lib.mkIf
       cfg.enable

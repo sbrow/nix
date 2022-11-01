@@ -1,6 +1,6 @@
 # TODO: Install private shell key?
 # TODO: git config via HomeManager?
-{ config, hostName, lib, pkgs, nixpkgs, ... }:
+{ config, hostName ? "nixos", lib, pkgs, nixpkgs, ... }:
 
 let
   cfg = config.services.laravel;
