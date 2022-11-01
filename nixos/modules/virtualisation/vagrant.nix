@@ -1,4 +1,4 @@
-{ config, lib, hostName ? "nixos", ... }:
+{ config, lib, hostName ? "nixos", pkgs, ... }:
 let cfg = config.services.laravel;
 in
 {
