@@ -2,6 +2,9 @@
 let cfg = config.services.laravel;
 in
 {
+  imports = [
+    ../web-apps/laravel.nix
+  ];
   config = lib.mkMerge [
     {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -15,10 +18,10 @@ in
         options = [ "rw,uid=1001,gid=60,_netdev" ]; # mount as vagrant:nginx
       };
 
-      networking.hostName = hostName;
-      networking.extraHosts = ''
-        127.0.0.1 ${config.networking.hostName}.local
-      '';
+      # networking.hostName = hostName;
+      # networking.extraHosts = ''
+      #   127.0.0.1 ${config.networking.hostName}.local
+      # '';
 
       security.sudo.wheelNeedsPassword = false;
 
@@ -56,12 +59,10 @@ in
         cd /vagrant;
       '';
     }
-    (lib.mkIf
-      cfg.enable
-      {
-        services.laravel.root = lib.mkDefault "/vagrant";
-        services.laravel.domain = lib.mkDefault (hostName + ".local");
-        services.laravel.user = lib.mkDefault "vagrant";
-      })
+    (lib.mkIf (cfg.enable == true) {
+      services.laravel.root = lib.mkDefault "/vagrant";
+      # services.laravel.domain = lib.mkDefault (hostName + ".local");
+      services.laravel.user = lib.mkDefault "vagrant";
+    })
   ];
 }
