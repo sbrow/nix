@@ -60,6 +60,7 @@ in
       '';
     }
     (lib.mkIf (cfg.enable == true) {
+      services.laravel.bashAliases.enable = lib.mkDefault true;
       services.laravel.root = lib.mkDefault "/vagrant";
       # services.laravel.domain = lib.mkDefault (hostName + ".local");
       services.laravel.user = lib.mkDefault "vagrant";

@@ -1,6 +1,6 @@
 # TODO: Install private shell key?
 # TODO: git config via HomeManager?
-{ config, hostName ? "nixos", lib, pkgs, nixpkgs, ... }:
+{ config, hostName ? "nixos", lib, pkgs, ... }:
 
 let
   cfg = config.services.laravel;
@@ -69,6 +69,11 @@ in
         type = lib.types.str;
         default = "mysql";
       };
+
+      bashAliases.enable = lib.mkOption {
+        description = "Whether to install aliases for bash";
+        default = false;
+      };
     };
   };
 
@@ -119,6 +124,17 @@ in
           };
         }
       ];
+    })
+    (lib.mkIf (cfg.bashAliases.enalbe == true) {
+      programs.bash.shellAliases = {
+        h = "php artisan horizon";
+        m = "php artisan migrate";
+        mfs = "php artisan migrate:fresh --seed";
+        mr = "php artisan migrate:rollback";
+        mr1 = "php artisan migrate:rollback --step=1";
+        standard-version = "yarn standard-version";
+        t = "php artisan tinker";
+      };
     })
   ]);
 }
