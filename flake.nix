@@ -7,16 +7,30 @@
       vagrant = { ... }: { imports = [ ./nixos/modules/virtualisation/vagrant.nix ]; };
     };
 
-    checks."x86_64-linux".vagrant = let pkgs = nixpkgs.legacyPackages."x86_64-linux"; in
-      pkgs.nixosTest {
-        name = "vagrant-box-test";
-        nodes.machine = { pkgs, ... }: { imports = with self.nixosModules; [ vagrant ]; };
-        testScript = ''
-          # run hello on machine and check for output
-          machine.succeed('hello | grep "Hello, world!"')
-          machine.succeed('goodbye | grep "Hello, world!"')
-          # test is a simple python script
-        '';
-      };
+    checks."x86_64-linux".vagrant = let
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+    in pkgs.nixosTest {
+      name = "vagrant-box-test";
+      nodes.machine = { config, pkgs, ... }: {
+        imports = [ self.nixosModules.vagrant ];
+        config = {
+          assertions = [
+            {
+              assertion = config.services.laravel.enable == false;
+              message = "Laravel should be disabled";
+            }
+            {
+              assertion = config.services.laravel.bashAliases.enable == config.services.laravel.enable;
+              message = "Bash aliases should be enabled";
+            }
+          ];
+        };
+        };
+      testScript = ''
+        # run hello on machine and check for output
+        # test is a simple python script
+        machine.succeed('cd /vagrant && php artisan')
+      '';
+    };
   };
 }
