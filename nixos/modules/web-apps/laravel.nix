@@ -125,7 +125,7 @@ in
         }
       ];
     })
-    (lib.mkIf (cfg.bashAliases.enalbe == true) {
+    (lib.mkIf (cfg.bashAliases.enable == true) {
       programs.bash.shellAliases = {
         h = "php artisan horizon";
         m = "php artisan migrate";
