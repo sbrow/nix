@@ -127,11 +127,14 @@ in
     })
     (lib.mkIf (cfg.bashAliases.enable == true) {
       programs.bash.shellAliases = {
+        a = "php artisan";
         h = "php artisan horizon";
         m = "php artisan migrate";
         mfs = "php artisan migrate:fresh --seed";
         mr = "php artisan migrate:rollback";
         mr1 = "php artisan migrate:rollback --step=1";
+        o = "php artisan optimize";
+        oc = "php artisan optimize:clear";
         standard-version = "yarn standard-version";
         t = "php artisan tinker";
       };
