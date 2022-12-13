@@ -9,7 +9,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, sbrow }:
+  outputs = { self, flake-utils, nixpkgs, sbrow }:
     flake-utils.lib.eachSystem flake-utils.lib.allSystems
       (system: {
         formatter = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
