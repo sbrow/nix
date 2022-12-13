@@ -9,7 +9,7 @@
 
     templates = {
       default = {
-        path = "./templates/default";
+        path = ./templates/default;
         description = "A simple boilerplate for running Laravel on NixOS in a Vagrant machine.";
       };
     };
