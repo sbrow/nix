@@ -16,7 +16,7 @@
       }) // {
       nixosModules.default = { config, pkgs, ... }: {
         config = {
-          environment.systemPackages = with [ pkgs.git ];
+          environment.systemPackages = [ pkgs.git ];
           /* Your config here */
         };
       };
