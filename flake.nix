@@ -7,6 +7,13 @@
       vagrant = { ... }: { imports = [ ./nixos/modules/virtualisation/vagrant.nix ]; };
     };
 
+    templates = {
+      default = {
+        path = "./templates/default";
+        description = "A simple boilerplate for running Laravel on NixOS in a Vagrant machine.";
+      };
+    };
+
     checks."x86_64-linux".vagrant = let
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
     in pkgs.nixosTest {
