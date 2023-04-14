@@ -12,7 +12,7 @@
         path = ./templates/default;
         description = "A simple boilerplate for running Laravel on NixOS in a Vagrant machine.";
       };
-      default = {
+      php = {
         path = ./templates/php;
         description = "A simple boilerplate for running PHP apps in a nix shell.";
       };
