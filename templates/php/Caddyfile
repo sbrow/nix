@@ -1,0 +1,19 @@
+wp.test {
+	root * .
+
+	encode zstd gzip
+	file_server
+	php_fastcgi 127.0.0.1:9000
+
+	tls internal
+}
+
+laravel.test {
+	root * ./public
+
+	encode zstd gzip
+	file_server
+	php_fastcgi 127.0.0.1:9000
+
+	tls internal
+}
