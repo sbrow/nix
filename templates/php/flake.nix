@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
   };
 
   outputs = { self, flake-utils, nixpkgs }: flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
@@ -18,6 +18,7 @@
           caddy
           foreman
           php80
+          php80Packages.composer
         ];
       };
     });
