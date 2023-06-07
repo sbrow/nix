@@ -2,7 +2,7 @@
   description = "A very basic flake";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/22.05";
+    # nixpkgs.url = "github:NixOS/nixpkgs/23.05";
 
     sbrow.url = "github:sbrow/nix";
 
