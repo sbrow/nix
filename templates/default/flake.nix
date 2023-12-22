@@ -2,25 +2,26 @@
   description = "A very basic flake";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/23.05";
+    # nixpkgs.url = "github:NixOS/nixpkgs/23.11";
 
     sbrow.url = "github:sbrow/nix";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, flake-utils, nixpkgs, sbrow }:
-    flake-utils.lib.eachSystem flake-utils.lib.allSystems
-      (system:
-        let pkgs = nixpkgs.legacyPackages.${system}; in
-        {
-          formatter = pkgs.nixpkgs-fmt;
+  outputs = inputs@{ self, flake-parts, nixpkgs, sbrow }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
 
-          devShells.default = pkgs.mkShell
-            {
-              buildInputs = with pkgs; [
-                # Your packages here
-              ];
-            };
-        });
+      perSystem = { pkgs, system, ... }: {
+        formatter = pkgs.nixpkgs-fmt;
+
+        devShells.default = pkgs.mkShell
+          {
+            buildInputs = with pkgs; [
+              # Your packages here
+            ];
+          };
+      };
+    };
 }
