@@ -1,2 +1,0 @@
-web: sudo caddy run
-php: php-fpm -F -y php-fpm.conf
