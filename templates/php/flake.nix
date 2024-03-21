@@ -44,8 +44,11 @@
             web.command = "sudo ${pkgs.caddy}/bin/caddy run";
             mail.command = "${pkgs.mailhog}/bin/MailHog";
             php.command = "${php}/bin/php-fpm -F -y php-fpm.conf";
+            #php.command = "${php} artisan octane:start --watch";
             # redis.command = "${$pks.redis}/bin/redis-server";
             # db.command = "${doltPkg}/bin/dolt sql-server --config dolt.yml";
+            # worker.command = php artisan horizon;
+            # schedule.command = php artisan schedule:work;
           };
 
           devShells.default = pkgs.mkShell
