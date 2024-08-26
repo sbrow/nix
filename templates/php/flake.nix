@@ -3,6 +3,7 @@
 
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/23.11";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/unstable";
     # dolt.url = "github:sbrow/dolt";
     # phps.url = "github:fossar/nix-phps";
     # phps.inputs.nixpkgs.follows = "nixpkgs";
@@ -38,6 +39,15 @@
           };
         in
         {
+          _module.args.pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+
+            overlays = [
+              # (final: prev: { unstable = inputs'.nixpkgs-unstable.legacyPackages; })
+            ];
+          };
+
           formatter = pkgs.nixpkgs-fmt;
 
           process-compose.default.settings.processes = {
@@ -60,6 +70,8 @@
                 php.packages.composer
                 php.packages.phpcbf
                 php.packages.phpcs
+
+                nodePackages.intelephense
               ];
             };
         };
