@@ -2,7 +2,7 @@
   description = "A very basic flake";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/23.11";
+    # nixpkgs.url = "github:NixOS/nixpkgs/24.11";
     # nixpkgs-unstable.url = "github:NixOS/nixpkgs/unstable";
     # dolt.url = "github:sbrow/dolt";
     # phps.url = "github:fossar/nix-phps";
@@ -12,11 +12,22 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     process-compose-flake.url = "github:Platonic-Systems/process-compose-flake";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, flake-parts, nixpkgs, /* phps, */ process-compose-flake, sbrow }:
+  outputs =
+    inputs@{ self
+    , flake-parts
+    , nixpkgs
+    , /* phps, */
+      process-compose-flake
+    , sbrow
+    , treefmt-nix
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        inputs.treefmt-nix.flakeModule
         inputs.process-compose-flake.flakeModule
       ];
       systems = [ "x86_64-linux" ];
@@ -48,7 +59,48 @@
             ];
           };
 
-          formatter = pkgs.nixpkgs-fmt;
+          treefmt = {
+            # Used to find the project root
+            projectRootFile = "flake.nix";
+
+            # Format nix files
+            programs.nixpkgs-fmt.enable = true;
+
+            # Format php files
+            /*
+          settings.formatter."pint" =
+            {
+              command = "./vendor/bin/pint";
+              includes = [ "*[!.blade].php" ];
+              excludes = [ "_ide_helper*.php" ];
+            };
+
+          # Format blade files
+          settings.formatter."blade-formatter" = {
+            command = "./bin/blade-formatter";
+            options = [ "--write" ];
+            includes = [ "*.blade.php" ];
+          };
+            */
+
+            # Format js, json, and yaml files
+            programs.prettier.enable = true;
+            settings.formatter.prettier =
+              {
+                excludes = [
+                  "public/**"
+                  "resources/js/modernizr.js"
+                  "storage/app/caniuse.json"
+                  "*.md"
+                ];
+              };
+
+            # Format elm components
+            #programs.elm-format.enable = true;
+
+            # Override the default package
+            #programs.terraform.package = nixpkgs.terraform_1;
+          };
 
           process-compose.default.settings.processes = {
             web.command = "sudo ${pkgs.caddy}/bin/caddy run";
@@ -68,8 +120,7 @@
 
                 php
                 php.packages.composer
-                php.packages.phpcbf
-                php.packages.phpcs
+                php.packages.php-codesniffer
 
                 nodePackages.intelephense
               ];
