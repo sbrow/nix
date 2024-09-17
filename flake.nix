@@ -1,5 +1,5 @@
 {
-  description = "Utilities for running Laravel, particularly with Vagrant";
+  description = "Utilities for running Laravel, particularly with nix run";
 
   outputs = { nixpkgs, self }: {
     nixosModules = {
@@ -9,8 +9,8 @@
 
     templates = {
       default = {
-        path = ./templates/default;
-        description = "A simple boilerplate for running Laravel on NixOS in a Vagrant machine.";
+        path = ./templates/php;
+        description = "A simple boilerplate for running Laravel with nix run.";
       };
       nodejs = {
         path = ./templates/nodejs;
