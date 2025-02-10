@@ -2,13 +2,11 @@
   description = "A very basic flake";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/24.11";
-    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # dolt.url = "github:sbrow/dolt";
     # phps.url = "github:fossar/nix-phps";
     # phps.inputs.nixpkgs.follows = "nixpkgs";
-
-    sbrow.url = "github:sbrow/nix";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     process-compose-flake.url = "github:Platonic-Systems/process-compose-flake";
@@ -20,9 +18,7 @@
     inputs@{ self
     , flake-parts
     , nixpkgs
-    , /* phps, */
-      process-compose-flake
-    , sbrow
+    , process-compose-flake
     , treefmt-nix
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -55,7 +51,7 @@
             config.allowUnfree = true;
 
             overlays = [
-              # (final: prev: { unstable = inputs'.nixpkgs-unstable.legacyPackages; })
+              (final: prev: { unstable = inputs'.nixpkgs-unstable.legacyPackages; })
             ];
           };
 
@@ -65,6 +61,7 @@
 
             # Format nix files
             programs.nixpkgs-fmt.enable = true;
+            programs.deadnix.enable = true;
 
             # Format php files
             /*
@@ -122,7 +119,11 @@
                 php.packages.composer
                 php.packages.php-codesniffer
 
+                # IDE
+                unstable.helix
                 nodePackages.intelephense
+                typescript-language-server
+                vscode-langservers-extracted
               ];
             };
         };
