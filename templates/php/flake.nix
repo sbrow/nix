@@ -134,6 +134,24 @@
                 vscode-langservers-extracted
               ];
             };
+
+          checks = {
+            phpstan = pkgs.stdenvNoCC.mkDerivation {
+              name = "phpstan-check";
+              dontBuild = true;
+              doCheck = true;
+              src = ./.;
+              buildInputs = [ php php.packages.phpstan ];
+
+              checkPhase = ''
+                mkdir $out
+                cp -r $src/* $out
+                cd $out
+                php install.php
+                phpstan analyze --ansi # --memory-limit=256M
+              '';
+            };
+          };
         };
     };
 }
