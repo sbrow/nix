@@ -58,6 +58,14 @@
           treefmt = {
             # Used to find the project root
             projectRootFile = "flake.nix";
+            settings.global.excludes = [
+              ".direnv/**"
+              ".jj/**"
+              ".env"
+              ".envrc"
+              ".env.local"
+            ];
+
 
             # Format nix files
             programs.nixpkgs-fmt.enable = true;
