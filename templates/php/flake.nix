@@ -18,6 +18,7 @@
     inputs@{ self
     , flake-parts
     , nixpkgs
+    , nixpkgs-unstable
     , process-compose-flake
     , treefmt-nix
     }:
@@ -36,6 +37,9 @@
               xdebug
             ]));
             extraConfig = ''
+              ; Disable short tags
+              short_open_tag = off
+
               ; xdebug 3
               xdebug.mode=debug
               xdebug.client_port=9000
