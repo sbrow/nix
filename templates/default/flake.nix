@@ -1,5 +1,5 @@
 {
-  description = "A PHP dev environment";
+  description = "A dev environment";
 
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -22,31 +22,12 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.treefmt-nix.flakeModule
-        inputs.process-compose-flake.flakeModule
+        # inputs.process-compose-flake.flakeModule
       ];
       systems = [ "x86_64-linux" ];
 
       perSystem =
-        { pkgs, system, inputs', ... }:
-        let
-          php = pkgs.php.buildEnv {
-            extensions = ({ enabled, all }: enabled ++ (with all; [
-              xdebug
-            ]));
-            extraConfig = ''
-              ; Disable short tags
-              short_open_tag = off
-
-              ; xdebug 3
-              xdebug.mode=debug
-              xdebug.client_port=9000
-
-              ; xdebug 2
-              ; xdebug.remote_enable=1
-            '';
-          };
-        in
-        {
+        { pkgs, system, inputs', ... }: {
           _module.args.pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
@@ -72,8 +53,6 @@
             programs.nixpkgs-fmt.enable = true;
             programs.deadnix.enable = true;
 
-            # TODO: Format php files
-
             # Format js, json, and yaml files
             programs.prettier.enable = true;
             settings.formatter.prettier =
@@ -87,47 +66,26 @@
               };
           };
 
+          /*
           process-compose.default.settings.processes = {
             web.command = "sudo ${pkgs.caddy}/bin/caddy run";
             mail.command = "${pkgs.mailhog}/bin/MailHog";
             php.command = "${php}/bin/php-fpm -F -y php-fpm.conf";
-            # redis.command = "${$pks.redis}/bin/redis-server";
+            redis.command = "${$pks.redis}/bin/redis-server";
           };
+          */
 
           devShells.default = pkgs.mkShell
             {
               buildInputs = with pkgs; [
-                caddy
-
-                php
-                php.packages.composer
-                php.packages.php-codesniffer
+                # TODO: Packages go here.
 
                 # IDE
                 unstable.helix
-                nodePackages.intelephense
                 typescript-language-server
                 vscode-langservers-extracted
               ];
             };
-
-          checks = {
-            phpstan = pkgs.stdenvNoCC.mkDerivation {
-              name = "phpstan-check";
-              dontBuild = true;
-              doCheck = true;
-              src = ./.;
-              buildInputs = [ php php.packages.phpstan ];
-
-              checkPhase = ''
-                mkdir $out
-                cp -r $src/* $out
-                cd $out
-                php install.php
-                phpstan analyze --ansi # --memory-limit=256M
-              '';
-            };
-          };
         };
     };
 }
