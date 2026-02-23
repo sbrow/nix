@@ -1,0 +1,11 @@
+go.localhost {
+	encode zstd gzip
+
+	# root * .
+	# file_server
+
+	reverse_proxy :8888
+
+	tls internal
+}
+

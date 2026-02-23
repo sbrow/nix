@@ -14,6 +14,10 @@
         path = ./templates/default;
         description = "A simple boilerplate for running Laravel with nix run.";
       };
+      go = {
+        path = ./templates/go;
+        description = "A simple boilerplate for building Go apps.";
+      };
       nodejs = {
         path = ./templates/nodejs;
         description =
