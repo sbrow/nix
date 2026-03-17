@@ -103,6 +103,10 @@
                 php.packages.composer
                 php.packages.php-codesniffer
 
+                # OpenCode tools
+                sqlite
+                jq
+
                 # IDE
                 unstable.helix
                 nodePackages.intelephense
