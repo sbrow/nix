@@ -17,6 +17,11 @@ linters:
     - recvcheck
     - sloglint
     - usestdlibvars
+  settings:
+    recvcheck:
+      disable-builtin: false
+      exclusions:
+        - "*.TableName"
 formatters:
   enable:
     - goimports
