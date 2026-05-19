@@ -64,6 +64,8 @@
                   "*.md"
                 ];
               };
+
+            programs.golangci-lint.enable = true;
           };
 
           process-compose.default.settings.processes = {
@@ -82,13 +84,16 @@
                 tailwindcss_4
                 goose
 
-                # IDE
+                # code quality
                 gopls
                 gotools
                 golangci-lint
+                typescript-language-server
                 
+                # IDE
                 unstable.helix
                 typescript-language-server
+                # vscode-json-languageserver
                 vscode-langservers-extracted
               ];
             };
