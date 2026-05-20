@@ -5,6 +5,8 @@ linters:
     - bidichk
     - contextcheck
     - decorder
+    - err13
+    - errorlint
     - exhaustive
     - fatcontext
     - gosec
@@ -16,6 +18,7 @@ linters:
     - prealloc
     - recvcheck
     - sloglint
+    - unparam
     - usestdlibvars
   settings:
     recvcheck:
