@@ -3,17 +3,20 @@ linters:
   default: standard
   enable:
     - bidichk
+    - containedctx
     - contextcheck
     - decorder
     - err13
     - errorlint
     - exhaustive
     - fatcontext
+    - gocritic
     - gosec
     - govet
     - intrange
     - maintidx
     - modernize
+    - nilnil
     - noctx
     - prealloc
     - recvcheck
