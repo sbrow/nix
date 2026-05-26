@@ -49,6 +49,23 @@ linters:
     - varnamelen
     - wsl_v5
   settings:
+    depguard:
+      rules:
+        main:
+          list-mode: strict
+          files:
+            "**/main.go"
+          allow:
+            - "$gostd"
+        catchall:
+          list-mode: strict
+          files:
+            - "!$test"
+            - "!**/main.go"
+            - "**/internal/**"
+          allow:
+            - "$gostd"
+            - "golang.org/**"
     recvcheck:
       disable-builtin: false
       exclusions:
