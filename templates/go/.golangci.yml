@@ -1,12 +1,15 @@
 version: "2"
 linters:
   default: standard
+  # default: all
   enable:
     - bidichk
     - containedctx
     - contextcheck
     - decorder
-    - err13
+    - depguard
+    - err113
+    - errchkjson
     - errorlint
     - exhaustive
     - fatcontext
@@ -16,13 +19,35 @@ linters:
     - intrange
     - maintidx
     - modernize
-    - nilnil
+    - nlreturn
     - noctx
     - prealloc
     - recvcheck
     - sloglint
     - unparam
+    - unused
     - usestdlibvars
+    - whitespace
+  disable:
+    # Deprecateed
+    - gomodguard
+    - wsl
+
+    # Comment checker
+    - revive
+    - wrapcheck # reinclude
+
+    # Not useful
+    - cyclop
+    - funlen
+    - gocognit
+    - gocyclo
+    - nestif
+    - noinlineerr
+    - tagalign
+    - tagliatelle
+    - varnamelen
+    - wsl_v5
   settings:
     recvcheck:
       disable-builtin: false
@@ -31,3 +56,4 @@ linters:
 formatters:
   enable:
     - goimports
+    - golines
