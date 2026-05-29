@@ -21,8 +21,10 @@ linters:
     - modernize
     - nlreturn
     - noctx
+    - perfsprint
     - prealloc
     - recvcheck
+    - rowserrcheck
     - sloglint
     - unparam
     - unused
