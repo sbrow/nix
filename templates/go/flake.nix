@@ -58,17 +58,43 @@
             settings.formatter.prettier =
               {
                 excludes = [
+                  "assets/vendor/**"
                   "public/**"
                   "resources/js/modernizr.js"
                   "storage/app/caniuse.json"
+                  "templates/**"
                   "*.md"
                 ];
               };
 
-            programs.golangci-lint.enable = true;
+            # Appears to be broken?
+            programs.golangci-lint.enable = false;
           };
 
-          process-compose.default.settings.processes = {
+          packages.default = pkgs.buildGoModule rec {
+            # pname = "package-name";
+            version = "0.1.0";
+            src = ./.;
+            vendorHash = "sha256-0000000000000000000000000000000000000000000=";
+
+            env.CGO_ENABLED = 1;
+            buildInputs = [ pkgs.sqlite ];
+
+            # subPackages = [ ];
+
+            ldflags = [
+              "-X git.verticalaxion.com/verticalaxion/sales-tracker-go/internal/config.Version=${version}"
+            ];
+
+            # postInstall = ''
+            #   mkdir -p $out/lib
+            #   cp -r ${src}/templates $out/lib/templates
+            #   cp -r ${src}/assets $out/lib/assets
+            # '';
+          };
+
+          # Run this with nix run .#dev
+          process-compose.dev.settings.processes = {
             mail.command = "${pkgs.mailhog}/bin/MailHog";
             web.command = "${pkgs.air}/bin/air --";
           };

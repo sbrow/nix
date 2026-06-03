@@ -72,6 +72,13 @@ linters:
       disable-builtin: false
       exclusions:
         - "*.TableName"
+    sloglint:
+      attr-only: true
+      context: "scope"
+      key-naming-case: "camel"
+      static-msg: true
+      # no-raw-keys: true
+      msg-style: "lowercased"
 formatters:
   enable:
     - goimports
