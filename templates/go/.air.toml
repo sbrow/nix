@@ -1,1 +1,3 @@
 tmp_dir = "var/air"
+
+env_files = [".env"]
