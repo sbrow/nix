@@ -96,7 +96,9 @@
           # Run this with nix run .#dev
           process-compose.dev.settings.processes = {
             mail.command = "${pkgs.mailhog}/bin/MailHog";
-            web.command = "${pkgs.air}/bin/air --";
+            web.command = "${pkgs.caddy}/bin/caddy run";
+            web.is_elevated = true;
+            docs.command = "${pkgs.pkgsite}/bin/pkgsite --http localhost:6060";
           };
 
           devShells.default = pkgs.mkShell
