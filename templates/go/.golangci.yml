@@ -8,6 +8,7 @@ linters:
     - contextcheck
     - decorder
     - depguard
+    - dupl
     - err113
     - errchkjson
     - errorlint
