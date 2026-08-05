@@ -14,6 +14,10 @@
         path = ./templates/default;
         description = "A simple boilerplate for running Laravel with nix run.";
       };
+      crawler = {
+        path = ./templates/crawler;
+        description = "Boilerplate for using playwright with Node.js.";
+      };
       go = {
         path = ./templates/go;
         description = "A simple boilerplate for building Go apps.";
@@ -27,6 +31,10 @@
         path = ./templates/php;
         description =
           "A simple boilerplate for running PHP apps in a nix shell.";
+      };
+      playwright = {
+        path = ./templates/playwright;
+        description = "Boilerplate for using playwright with python.";
       };
     };
 
