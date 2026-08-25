@@ -2,7 +2,7 @@
   description = "A PHP dev environment";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -89,7 +89,7 @@
 
           process-compose.default.settings.processes = {
             web.command = "sudo ${pkgs.caddy}/bin/caddy run";
-            mail.command = "${pkgs.mailhog}/bin/MailHog";
+            mail.command = "${pkgs.mailpit}/bin/mailpit";
             php.command = "${php}/bin/php-fpm -F -y php-fpm.conf";
             # redis.command = "${$pks.redis}/bin/redis-server";
           };
@@ -98,10 +98,11 @@
             {
               buildInputs = with pkgs; [
                 caddy
+                mailpit
 
-                php
-                php.packages.composer
-                php.packages.php-codesniffer
+                php85
+                php85.packages.composer
+                php85.packages.php-codesniffer
 
                 # OpenCode tools
                 sqlite
@@ -109,7 +110,7 @@
 
                 # IDE
                 unstable.helix
-                nodePackages.intelephense
+                intelephense
                 typescript-language-server
                 vscode-langservers-extracted
               ];
