@@ -52,7 +52,13 @@
             config.allowUnfree = true;
 
             overlays = [
-              (final: prev: { unstable = inputs'.nixpkgs-unstable.legacyPackages; })
+              (final: prev: {
+                unstable = import nixpkgs-unstable {
+                  inherit system;
+
+                  config.allowUnfree = true;
+                };
+              })
             ];
           };
 
