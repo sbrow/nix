@@ -2,4 +2,4 @@
 .env
 result
 var
-vendor
+/vendor
